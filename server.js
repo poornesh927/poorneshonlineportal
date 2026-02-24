@@ -1,12 +1,4 @@
-require('dotenv').config({ override: false });
-
-// TEMPORARY DEBUG
-console.log('=== ENV VARIABLES CHECK ===');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('PORT:', process.env.PORT);
-console.log('MONGO_URI:', process.env.MONGO_URI);
-console.log('JWT_ACCESS_SECRET:', process.env.JWT_ACCESS_SECRET ? '✅ Found' : '❌ MISSING');
-console.log('===========================');
+require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
