@@ -41,7 +41,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
 
     const allowedOrigins = [
-      'http://localhost:5173',
+      'http://localhost:5174',
       process.env.CLIENT_URL,        // read fresh each call
     ].filter(Boolean);               // removes undefined if CLIENT_URL not set
 
