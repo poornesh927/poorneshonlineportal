@@ -403,21 +403,7 @@ const getResult = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Exam not yet submitted.' });
     }
 
-    if (!attempt.exam.showResultImmediately) {
-      return res.json({
-        success: true,
-        data: { 
-          attempt: { 
-            _id: attempt._id, 
-            status: attempt.status, 
-            submittedAt: attempt.submittedAt,
-            message: 'Results will be declared by the administrator.'
-          } 
-        }
-      });
-    }
-
-    // Build detailed result with question details
+    // Always build detailed result with correct answers visible to student
     const detailedAnswers = attempt.answers.map(answer => {
       const question = attempt.exam.questions.id(answer.questionId);
       if (!question) return null;
@@ -425,7 +411,7 @@ const getResult = async (req, res) => {
         questionId: answer.questionId,
         questionText: question.text,
         type: question.type,
-        options: question.options, // with isCorrect for result view
+        options: question.options, // includes isCorrect so student sees correct answers
         selectedOptions: answer.selectedOptions,
         isCorrect: answer.isCorrect,
         marksObtained: answer.marksObtained,
@@ -456,6 +442,7 @@ const getResult = async (req, res) => {
           status: attempt.status,
           tabSwitchCount: attempt.tabSwitchCount,
           flagged: attempt.flagged,
+          showResultImmediately: attempt.exam.showResultImmediately,
           answers: detailedAnswers,
         }
       }
